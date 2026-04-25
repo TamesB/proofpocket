@@ -1,0 +1,17 @@
+.git
+.cursor
+.venv
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+.env
+media/
+node_modules/
+staticfiles/
+celerybeat-schedule*
+Dockerfile
+.dockerignore
+
