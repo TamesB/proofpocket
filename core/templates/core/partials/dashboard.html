@@ -1,0 +1,35 @@
+<div class="space-y-6">
+  <header class="flex items-start justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-semibold text-zinc-50">Dashboard</h1>
+      <p class="mt-1 text-sm text-zinc-400">Keep your receipts and warranties organized, and never miss an expiry.</p>
+    </div>
+    <a
+      class="inline-flex items-center rounded-xl bg-zinc-50 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white"
+      href="{% url 'purchases:new' %}"
+      hx-get="{% url 'purchases:new' %}"
+      hx-target="#app_main"
+      hx-swap="innerHTML"
+      hx-push-url="true"
+    >Add purchase</a>
+  </header>
+
+  <section class="grid gap-4 md:grid-cols-3">
+    <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4">
+      <div class="text-sm text-zinc-400">Return windows</div>
+      <div class="mt-2 text-3xl font-semibold text-zinc-50">—</div>
+      <div class="mt-1 text-xs text-zinc-500">Coming from your data</div>
+    </div>
+    <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4">
+      <div class="text-sm text-zinc-400">Warranties expiring</div>
+      <div class="mt-2 text-3xl font-semibold text-zinc-50">—</div>
+      <div class="mt-1 text-xs text-zinc-500">Coming from your data</div>
+    </div>
+    <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4">
+      <div class="text-sm text-zinc-400">Next email reminder</div>
+      <div class="mt-2 text-3xl font-semibold text-zinc-50">—</div>
+      <div class="mt-1 text-xs text-zinc-500">Scheduled via Celery</div>
+    </div>
+  </section>
+</div>
+

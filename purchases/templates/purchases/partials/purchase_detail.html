@@ -1,0 +1,104 @@
+<div class="space-y-6">
+  <header class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+    <div>
+      <div class="text-xs text-zinc-500">Purchase</div>
+      <h1 class="text-2xl font-semibold text-zinc-50">{{ purchase.title }}</h1>
+      <div class="mt-1 text-sm text-zinc-400">
+        {% if purchase.merchant %}{{ purchase.merchant }} · {% endif %}Purchased {{ purchase.purchased_at }}
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <a
+        class="inline-flex items-center rounded-xl border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-100 hover:bg-zinc-800/60"
+        href="{% url 'purchases:list' %}"
+        hx-get="{% url 'purchases:list' %}"
+        hx-target="#app_main"
+        hx-swap="innerHTML"
+        hx-push-url="true"
+      >Back</a>
+      <a
+        class="inline-flex items-center rounded-xl bg-zinc-50 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white"
+        href="{% url 'purchases:edit' purchase_id=purchase.id %}"
+        hx-get="{% url 'purchases:edit' purchase_id=purchase.id %}"
+        hx-target="#app_main"
+        hx-swap="innerHTML"
+        hx-push-url="true"
+      >Edit</a>
+      <form
+        method="post"
+        action="{% url 'purchases:delete' purchase_id=purchase.id %}"
+        hx-post="{% url 'purchases:delete' purchase_id=purchase.id %}"
+        hx-target="#app_main"
+        hx-swap="innerHTML"
+        hx-push-url="true"
+      >
+        {% csrf_token %}
+        <button class="inline-flex items-center rounded-xl border border-red-900/60 px-4 py-2 text-sm font-medium text-red-200 hover:bg-red-950/40" type="submit">
+          Delete
+        </button>
+      </form>
+    </div>
+  </header>
+
+  <section class="grid gap-4 md:grid-cols-3">
+    <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 md:col-span-2">
+      <div class="text-sm font-medium text-zinc-100">Details</div>
+      <dl class="mt-3 grid gap-3 text-sm md:grid-cols-2">
+        <div>
+          <dt class="text-xs text-zinc-500">Return until</dt>
+          <dd class="mt-1 text-zinc-200">{% if purchase.return_until %}{{ purchase.return_until }}{% else %}—{% endif %}</dd>
+        </div>
+        <div>
+          <dt class="text-xs text-zinc-500">Warranty until</dt>
+          <dd class="mt-1 text-zinc-200">{% if purchase.warranty_until %}{{ purchase.warranty_until }}{% else %}—{% endif %}</dd>
+        </div>
+        <div class="md:col-span-2">
+          <dt class="text-xs text-zinc-500">Notes</dt>
+          <dd class="mt-1 whitespace-pre-wrap text-zinc-200">{% if purchase.notes %}{{ purchase.notes }}{% else %}—{% endif %}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4">
+      <div class="text-sm font-medium text-zinc-100">Attachments</div>
+
+      <form
+        class="mt-3 space-y-3"
+        method="post"
+        enctype="multipart/form-data"
+        action="{% url 'purchases:attachment_add' purchase_id=purchase.id %}"
+        hx-post="{% url 'purchases:attachment_add' purchase_id=purchase.id %}"
+        hx-target="#app_main"
+        hx-swap="innerHTML"
+      >
+        {% csrf_token %}
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-zinc-300">Type</label>
+          {{ attach_form.kind }}
+          {% if attach_form.kind.errors %}<div class="text-xs text-red-300">{{ attach_form.kind.errors }}</div>{% endif %}
+        </div>
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-zinc-300">File</label>
+          {{ attach_form.file }}
+          {% if attach_form.file.errors %}<div class="text-xs text-red-300">{{ attach_form.file.errors }}</div>{% endif %}
+        </div>
+        <button class="w-full rounded-xl bg-zinc-50 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white" type="submit">
+          Upload
+        </button>
+      </form>
+
+      <div class="mt-4 space-y-2">
+        {% for a in purchase.attachments.all %}
+          <a class="block rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-zinc-200 hover:bg-zinc-900" href="{{ a.file.url }}" target="_blank" rel="noreferrer">
+            <div class="font-medium text-zinc-100">{{ a.get_kind_display }}</div>
+            <div class="mt-1 truncate text-zinc-500">{{ a.file.name }}</div>
+          </a>
+        {% empty %}
+          <div class="text-sm text-zinc-500">No files uploaded yet.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+

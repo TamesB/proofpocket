@@ -1,0 +1,20 @@
+{
+  "name": "portfolio1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "tailwind:build": "tailwindcss -i ./assets/styles.css -o ./static/css/app.css",
+    "tailwind:watch": "tailwindcss -i ./assets/styles.css -o ./static/css/app.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^4.2.4"
+  }
+}

@@ -1,0 +1,74 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}ProofPocket{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+    <script src="https://unpkg.com/htmx.org@2.0.6"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.6/dist/ext/response-targets.js"></script>
+  </head>
+  <body class="min-h-dvh bg-zinc-950 text-zinc-50">
+    <div class="min-h-dvh">
+      <div class="mx-auto flex max-w-6xl gap-4 px-4 py-6">
+        <aside class="hidden w-60 shrink-0 md:block">
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4">
+            <div class="text-sm font-semibold tracking-wide text-zinc-100">ProofPocket</div>
+            <div class="mt-1 text-xs text-zinc-400">Receipts, warranties, reminders</div>
+
+            <nav class="mt-6 space-y-1 text-sm">
+              <a
+                class="block rounded-lg px-3 py-2 text-zinc-200 hover:bg-zinc-800/60"
+                href="{% url 'core:dashboard' %}"
+                hx-get="{% url 'core:dashboard' %}"
+                hx-target="#app_main"
+                hx-swap="innerHTML"
+                hx-push-url="true"
+              >Dashboard</a>
+              <a
+                class="block rounded-lg px-3 py-2 text-zinc-200 hover:bg-zinc-800/60"
+                href="{% url 'purchases:list' %}"
+                hx-get="{% url 'purchases:list' %}"
+                hx-target="#app_main"
+                hx-swap="innerHTML"
+                hx-push-url="true"
+              >Purchases</a>
+              <a
+                class="block rounded-lg px-3 py-2 text-zinc-200 hover:bg-zinc-800/60"
+                href="{% url 'reminders:settings' %}"
+                hx-get="{% url 'reminders:settings' %}"
+                hx-target="#app_main"
+                hx-swap="innerHTML"
+                hx-push-url="true"
+              >Reminders</a>
+            </nav>
+
+            <div class="mt-6 border-t border-zinc-800 pt-4 text-xs text-zinc-400">
+              {% if request.user.is_authenticated %}
+                <div>Signed in as <span class="text-zinc-200">{{ request.user.username }}</span></div>
+                <form method="post" action="{% url 'logout' %}" class="mt-3">
+                  {% csrf_token %}
+                  <button class="w-full rounded-lg border border-zinc-700 px-3 py-2 text-xs font-medium text-zinc-200 hover:bg-zinc-800/60" type="submit">
+                    Log out
+                  </button>
+                </form>
+              {% else %}
+                <a class="block rounded-lg border border-zinc-700 px-3 py-2 text-center text-xs font-medium text-zinc-200 hover:bg-zinc-800/60" href="{% url 'login' %}">
+                  Log in
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </aside>
+
+        <main class="flex-1">
+          <div id="app_main">
+            {% block app_main %}{% endblock %}
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
+

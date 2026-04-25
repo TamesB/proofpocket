@@ -1,0 +1,37 @@
+{% extends "base_auth.html" %}
+
+{% block title %}Log in · ProofPocket{% endblock %}
+
+{% block content %}
+  <h1 class="text-xl font-semibold text-zinc-50">Log in</h1>
+  <p class="mt-1 text-sm text-zinc-400">Welcome back.</p>
+
+  <form method="post" class="mt-6 space-y-4">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="rounded-xl border border-red-900/50 bg-red-950/40 p-3 text-sm text-red-200">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+
+    <div class="space-y-1">
+      <label class="text-xs font-medium text-zinc-300">Username</label>
+      <input class="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-100" type="text" name="username" autofocus required />
+    </div>
+    <div class="space-y-1">
+      <label class="text-xs font-medium text-zinc-300">Password</label>
+      <input class="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-100" type="password" name="password" required />
+    </div>
+
+    <button class="w-full rounded-xl bg-zinc-50 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white" type="submit">
+      Log in
+    </button>
+  </form>
+
+  <div class="mt-6 text-center text-sm text-zinc-400">
+    No account?
+    <a class="text-zinc-100 underline" href="{% url 'accounts:signup' %}">Sign up</a>
+  </div>
+{% endblock %}
+

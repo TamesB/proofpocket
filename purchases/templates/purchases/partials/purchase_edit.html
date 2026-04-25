@@ -1,0 +1,69 @@
+<div class="space-y-6">
+  <header class="flex items-start justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-semibold text-zinc-50">Edit purchase</h1>
+      <p class="mt-1 text-sm text-zinc-400">{{ purchase.title }}</p>
+    </div>
+    <a
+      class="inline-flex items-center rounded-xl border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-100 hover:bg-zinc-800/60"
+      href="{% url 'purchases:detail' purchase_id=purchase.id %}"
+      hx-get="{% url 'purchases:detail' purchase_id=purchase.id %}"
+      hx-target="#app_main"
+      hx-swap="innerHTML"
+      hx-push-url="true"
+    >Back</a>
+  </header>
+
+  <form method="post" class="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
+    {% csrf_token %}
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="space-y-1">
+        <label class="text-xs font-medium text-zinc-300">Title</label>
+        {{ form.title }}
+        {% if form.title.errors %}<div class="text-xs text-red-300">{{ form.title.errors }}</div>{% endif %}
+      </div>
+      <div class="space-y-1">
+        <label class="text-xs font-medium text-zinc-300">Merchant</label>
+        {{ form.merchant }}
+        {% if form.merchant.errors %}<div class="text-xs text-red-300">{{ form.merchant.errors }}</div>{% endif %}
+      </div>
+      <div class="space-y-1">
+        <label class="text-xs font-medium text-zinc-300">Price</label>
+        {{ form.price }}
+        {% if form.price.errors %}<div class="text-xs text-red-300">{{ form.price.errors }}</div>{% endif %}
+      </div>
+      <div class="space-y-1">
+        <label class="text-xs font-medium text-zinc-300">Currency</label>
+        {{ form.currency }}
+        {% if form.currency.errors %}<div class="text-xs text-red-300">{{ form.currency.errors }}</div>{% endif %}
+      </div>
+      <div class="space-y-1">
+        <label class="text-xs font-medium text-zinc-300">Purchase date</label>
+        {{ form.purchased_at }}
+        {% if form.purchased_at.errors %}<div class="text-xs text-red-300">{{ form.purchased_at.errors }}</div>{% endif %}
+      </div>
+      <div class="space-y-1">
+        <label class="text-xs font-medium text-zinc-300">Return until</label>
+        {{ form.return_until }}
+        {% if form.return_until.errors %}<div class="text-xs text-red-300">{{ form.return_until.errors }}</div>{% endif %}
+      </div>
+      <div class="space-y-1">
+        <label class="text-xs font-medium text-zinc-300">Warranty until</label>
+        {{ form.warranty_until }}
+        {% if form.warranty_until.errors %}<div class="text-xs text-red-300">{{ form.warranty_until.errors }}</div>{% endif %}
+      </div>
+      <div class="space-y-1 md:col-span-2">
+        <label class="text-xs font-medium text-zinc-300">Notes</label>
+        {{ form.notes }}
+        {% if form.notes.errors %}<div class="text-xs text-red-300">{{ form.notes.errors }}</div>{% endif %}
+      </div>
+    </div>
+
+    <div class="flex items-center justify-end gap-3 pt-2">
+      <button class="inline-flex items-center rounded-xl bg-zinc-50 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white" type="submit">
+        Save changes
+      </button>
+    </div>
+  </form>
+</div>
+
