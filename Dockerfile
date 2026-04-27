@@ -19,8 +19,3 @@ RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
 
 EXPOSE 8000
-
-# Railway/containers typically provide DATABASE_URL, REDIS URLs, etc.
-# We run migrate + collectstatic at container start (needs DB connection).
-CMD sh -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:${PORT}"
-
