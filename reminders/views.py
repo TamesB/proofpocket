@@ -23,7 +23,4 @@ def reminder_settings(request: HttpRequest) -> HttpResponse:
         "reminders/partials/settings.html" if request.htmx else "reminders/settings.html"
     )
     return render(request, template, {"rules": rules})
-
-from django.shortcuts import render
-
-# Create your views here.
+    
